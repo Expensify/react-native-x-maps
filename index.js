@@ -1,2 +1,7 @@
-alert('Hello world!');
+alert('Hello world!')
+
+
+
+
+
 export default {};
