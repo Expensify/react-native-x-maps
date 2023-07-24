@@ -1,0 +1,24 @@
+{
+  "name": "react-native-x-maps",
+  "version": "1.0.0",
+  "description": "A cross platform compatible map component for React-Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Expensify/react-native-x-maps.git"
+  },
+  "keywords": [
+    "React",
+    "React-Native",
+    "Map"
+  ],
+  "author": "Expensify, Inc.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Expensify/react-native-x-maps/issues"
+  },
+  "homepage": "https://github.com/Expensify/react-native-x-maps#readme"
+}
