@@ -7,9 +7,9 @@
 <!-- Please replace GH_LINK with the link to the GitHub issue this Pull Request is related to -->
 GH_LINK
 
-### Automated Tests
+### Manual Tests
 <!---
-Most changes to Onyx should have accompanying tests. Describe the tests you added or if no tests were added an explanation about why one was not needed.
+Most changes should have accompanying tests. Describe the tests you added or if no tests were added an explanation about why one was not needed.
 --->
 
 ### Linked PRs
