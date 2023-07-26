@@ -4,10 +4,11 @@
   "description": "A cross platform compatible map component for React-Native",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Warning: no build process has been specified yet\"",
     "lint": "eslint index.js",
     "prettier": "prettier --write .",
-    "prettier-watch": "onchange \"**/*.js\" -- prettier --write --ignore-unknown {{changed}}"
+    "prettier-watch": "onchange \"**/*.js\" -- prettier --write --ignore-unknown {{changed}}",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
