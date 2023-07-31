@@ -1,5 +1,6 @@
 module.exports = {
     root: true,
+    ignorePatterns: ['node_modules', 'dist'],
     plugins: ['react', 'jsx-a11y', '@typescript-eslint'],
     extends: [
         'eslint:recommended',
