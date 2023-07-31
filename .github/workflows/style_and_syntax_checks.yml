@@ -1,4 +1,4 @@
-name: Lint JavaScript
+name: Style and Syntax Checks
 
 on:
     pull_request:
