@@ -24,7 +24,7 @@ jobs:
               run: npx eslint src
 
             - name: Run Prettier
-              run: npx prettier .
+              run: npx prettier . --check
 
             - name: Run TypeScript checks
               run: npm run ts
