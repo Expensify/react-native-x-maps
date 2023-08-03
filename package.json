@@ -8,10 +8,9 @@
         "src"
     ],
     "scripts": {
-        "build": "rm -rf dist && npm run ts:declarations && npx babel src --out-dir dist --extensions '.ts,.tsx'",
+        "build": "rm -rf dist && npx tsc --emitDeclarationOnly && npx babel src --out-dir dist --extensions '.ts,.tsx'",
         "lint": "eslint src --fix",
         "ts": "npx tsc --noEmit",
-        "ts:declarations": "npx tsc --emitDeclarationOnly",
         "prettier": "prettier --write .",
         "prettier-watch": "onchange \"**/*.js\" -- prettier --write --ignore-unknown {{changed}}",
         "test": "echo \"Error: no test specified\" && exit 1"
