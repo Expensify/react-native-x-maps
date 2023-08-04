@@ -43,6 +43,7 @@ module.exports = {
                 message: 'async methods are not allowed',
             },
         ],
+        'react/jsx-props-no-spreading': 'off',
     },
     overrides: [
         {
@@ -52,6 +53,9 @@ module.exports = {
             parser: '@typescript-eslint/parser',
             parserOptions: {
                 project: './tsconfig.json',
+            },
+            rules: {
+                '@typescript-eslint/no-floating-promises': 'off',
             },
         },
     ],
