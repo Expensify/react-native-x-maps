@@ -12,7 +12,6 @@ module.exports = {
             },
         ],
         'no-invalid-this': 'error',
-        'no-use-before-define': 'off',
         'prefer-arrow-callback': 'off',
         'react/function-component-definition': [
             'error',
@@ -42,7 +41,6 @@ module.exports = {
             },
             rules: {
                 '@typescript-eslint/no-floating-promises': 'off',
-                '@typescript-eslint/no-use-before-define': 'off',
             },
         },
     ],

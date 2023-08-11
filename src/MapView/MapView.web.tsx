@@ -8,6 +8,15 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Direction from './Direction';
 import {DEFAULT_INITIAL_STATE} from './CONST';
 
+const getMapDimension = (mapRef: RefObject<MapRef>): {width: number; height: number} | undefined => {
+    if (!mapRef.current?.getMap()) {
+        return undefined;
+    }
+
+    const {clientWidth, clientHeight} = mapRef.current.getCanvas();
+    return {width: clientWidth, height: clientHeight};
+};
+
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
     {accessToken, waypoints, style, mapPadding, markerComponent: MarkerComponent, directionCoordinates, initialState = DEFAULT_INITIAL_STATE},
     ref,
@@ -87,14 +96,5 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
         </View>
     );
 });
-
-const getMapDimension = (mapRef: RefObject<MapRef>): {width: number; height: number} | undefined => {
-    if (!mapRef.current?.getMap()) {
-        return undefined;
-    }
-
-    const {clientWidth, clientHeight} = mapRef.current.getCanvas();
-    return {width: clientWidth, height: clientHeight};
-};
 
 export default MapView;
