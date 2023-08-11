@@ -1,11 +1,11 @@
 import {ComponentType} from 'react';
-import type {StyleProp, ViewStyle} from 'react-native';
 
 export type MapViewProps = {
     // Public access token to be used to fetch map data from Mapbox.
     accessToken: string;
     // Style applied to MapView component. Note some of the View Style props are not available on ViewMap
-    style: StyleProp<ViewStyle>;
+    height: number;
+    width: number;
     // Link to the style JSON document.
     styleURL?: string;
     // Whether map can tilt in the vertical direction.

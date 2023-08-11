@@ -1,7 +1,7 @@
 import Map, {MapRef, Marker} from 'react-map-gl';
-import {RefObject, forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
+import {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import WebMercatorViewport from '@math.gl/web-mercator';
-import {View} from 'react-native';
 import {MapViewHandle, MapViewProps} from './MapViewTypes';
 import {getBounds} from './utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -9,19 +9,14 @@ import Direction from './Direction';
 import {DEFAULT_INITIAL_STATE} from './consts';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
-    {accessToken, waypoints, style, mapPadding, markerComponent: MarkerComponent, directionCoordinates, initialState = DEFAULT_INITIAL_STATE},
+    {accessToken, waypoints, height, width, mapPadding, markerComponent: MarkerComponent, directionCoordinates, initialState = DEFAULT_INITIAL_STATE},
     ref,
 ) {
     const mapRef = useRef<MapRef>(null);
-    const [bounds, setBounds] = useState<{
-        longitude: number;
-        latitude: number;
-        zoom: number;
-    }>();
 
-    useEffect(() => {
+    const bounds = useMemo(() => {
         if (!waypoints || waypoints.length === 0) {
-            return;
+            return undefined;
         }
 
         if (waypoints.length === 1) {
@@ -29,21 +24,14 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                 center: waypoints[0],
                 zoom: 15,
             });
-            return;
+            return undefined;
         }
 
-        const {northEast, southWest} = getBounds(waypoints);
-        const {width, height} = getMapDimension(mapRef) || {
-            width: 0,
-            height: 0,
-        };
+        const boundColors = getBounds(waypoints);
         const viewport = new WebMercatorViewport({height, width});
-
-        const {latitude, longitude, zoom} = viewport.fitBounds([southWest, northEast], {
+        return viewport.fitBounds([boundColors.northEast, boundColors.southWest], {
             padding: mapPadding,
         });
-
-        setBounds({latitude, longitude, zoom});
     }, [waypoints]);
 
     useImperativeHandle(
@@ -59,42 +47,32 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
     );
 
     return (
-        <View style={style}>
-            <Map
-                ref={mapRef}
-                mapboxAccessToken={accessToken}
-                initialViewState={{
-                    longitude: initialState?.location[0],
-                    latitude: initialState?.location[1],
-                    zoom: initialState?.zoom,
-                }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
-                {...bounds}
-            >
-                {MarkerComponent &&
-                    waypoints &&
-                    waypoints.map((waypoint) => (
-                        <Marker
-                            key={`${waypoint[0]},${waypoint[1]}`}
-                            longitude={waypoint[0]}
-                            latitude={waypoint[1]}
-                        >
-                            <MarkerComponent />
-                        </Marker>
-                    ))}
-                {directionCoordinates && <Direction coordinates={directionCoordinates} />}
-            </Map>
-        </View>
+        <Map
+            ref={mapRef}
+            mapboxAccessToken={accessToken}
+            initialViewState={{
+                longitude: initialState?.location[0],
+                latitude: initialState?.location[1],
+                zoom: initialState?.zoom,
+            }}
+            style={{height, width, borderWidth: 5, borderColor: 'orange'}}
+            mapStyle="mapbox://styles/mapbox/streets-v9"
+            {...bounds}
+        >
+            {MarkerComponent &&
+                waypoints &&
+                waypoints.map((waypoint) => (
+                    <Marker
+                        key={`${waypoint[0]},${waypoint[1]}`}
+                        longitude={waypoint[0]}
+                        latitude={waypoint[1]}
+                    >
+                        <MarkerComponent />
+                    </Marker>
+                ))}
+            {directionCoordinates && <Direction coordinates={directionCoordinates} />}
+        </Map>
     );
 });
-
-const getMapDimension = (mapRef: RefObject<MapRef>): {width: number; height: number} | undefined => {
-    if (!mapRef.current?.getMap()) {
-        return undefined;
-    }
-
-    const {clientWidth, clientHeight} = mapRef.current.getCanvas();
-    return {width: clientWidth, height: clientHeight};
-};
 
 export default MapView;

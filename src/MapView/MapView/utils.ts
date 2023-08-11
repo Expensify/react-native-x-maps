@@ -1,5 +1,5 @@
-// ESLint rule forces the usage of default export if there is only one export.
-// But not using default export here as more util functions might be added later.
+// Other util functions might be added so not using default export for this
+// Remove this comment once other util functions are added
 // eslint-disable-next-line import/prefer-default-export
 export const getBounds = (waypoints: Array<[number, number]>): {southWest: [number, number]; northEast: [number, number]} => {
     const lngs = waypoints.map((waypoint) => waypoint[0]);
