@@ -3,10 +3,10 @@ import {RefObject, forwardRef, useEffect, useImperativeHandle, useRef, useState}
 import WebMercatorViewport from '@math.gl/web-mercator';
 import {View} from 'react-native';
 import {MapViewHandle, MapViewProps} from './MapViewTypes';
-import {getBounds} from './utils';
+import Utils from './utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Direction from './Direction';
-import {DEFAULT_INITIAL_STATE} from './consts';
+import {DEFAULT_INITIAL_STATE} from './CONST';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
     {accessToken, waypoints, style, mapPadding, markerComponent: MarkerComponent, directionCoordinates, initialState = DEFAULT_INITIAL_STATE},
@@ -32,7 +32,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
             return;
         }
 
-        const {northEast, southWest} = getBounds(waypoints);
+        const {northEast, southWest} = Utils.getBounds(waypoints);
         const {width, height} = getMapDimension(mapRef) || {
             width: 0,
             height: 0,

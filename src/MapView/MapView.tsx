@@ -3,7 +3,7 @@ import Mapbox, {MarkerView} from '@rnmapbox/maps';
 import {View} from 'react-native';
 import {MapViewProps, MapViewHandle} from './MapViewTypes';
 import Direction from './Direction';
-import {getBounds} from './utils';
+import Utils from './utils';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
     {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, markerComponent: MarkerComponent, directionCoordinates},
@@ -22,7 +22,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
             return undefined;
         }
 
-        const {southWest, northEast} = getBounds(waypoints);
+        const {southWest, northEast} = Utils.getBounds(waypoints);
         return {
             ne: northEast,
             sw: southWest,
