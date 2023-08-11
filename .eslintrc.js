@@ -12,6 +12,7 @@ module.exports = {
             },
         ],
         'no-invalid-this': 'error',
+        'prefer-arrow-callback': 'off',
         'react/function-component-definition': [
             'error',
             {
@@ -26,23 +27,8 @@ module.exports = {
                 selector: 'AwaitExpression',
                 message: 'async/await is not allowed',
             },
-            {
-                selector: 'FunctionDeclaration[async=true]',
-                message: 'async functions are not allowed',
-            },
-            {
-                selector: 'FunctionExpression[async=true]',
-                message: 'async functions are not allowed',
-            },
-            {
-                selector: 'ArrowFunctionExpression[async=true]',
-                message: 'async functions are not allowed',
-            },
-            {
-                selector: 'MethodDefinition[async=true]',
-                message: 'async methods are not allowed',
-            },
         ],
+        'react/jsx-props-no-spreading': 'off',
     },
     overrides: [
         {
@@ -52,6 +38,9 @@ module.exports = {
             parser: '@typescript-eslint/parser',
             parserOptions: {
                 project: './tsconfig.json',
+            },
+            rules: {
+                '@typescript-eslint/no-floating-promises': 'off',
             },
         },
     ],
