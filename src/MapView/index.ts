@@ -1,4 +1,4 @@
 import MapView from './MapView';
 
-export type {MapViewProps, MapViewHandle} from './MapViewTypes';
+export * from './MapView';
 export default MapView;
