@@ -85,7 +85,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
                             longitude={coordinate[0]}
                             latitude={coordinate[1]}
                         >
-                            {/* <MarkerComponent /> */}
+                            <MarkerComponent />
                         </Marker>
                     ))}
                 {directionCoordinates && <Direction coordinates={directionCoordinates} />}

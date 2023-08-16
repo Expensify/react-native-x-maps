@@ -108,7 +108,8 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
           MarkerComponent = _ref2.markerComponent;
         return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactMapGl.Marker, {
           longitude: coordinate[0],
-          latitude: coordinate[1]
+          latitude: coordinate[1],
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)(MarkerComponent, {})
         }, "".concat(coordinate[0], ",").concat(coordinate[1]));
       }), directionCoordinates && /*#__PURE__*/(0, _jsxRuntime.jsx)(_Direction["default"], {
         coordinates: directionCoordinates
