@@ -66,6 +66,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       });
       return;
     }
+    console.log(waypoints.map(function (waypoint) {
+      return waypoint.coordinate;
+    }));
     var _Utils$getBounds = _utils["default"].getBounds(waypoints.map(function (waypoint) {
         return waypoint.coordinate;
       })),

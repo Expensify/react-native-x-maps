@@ -1,1 +1,1 @@
-{"version":3,"file":"MapView.web.d.ts","sourceRoot":"","sources":["../../src/MapView/MapView.web.tsx"],"names":[],"mappings":";AAIA,OAAO,EAAC,aAAa,EAAE,YAAY,EAAC,MAAM,gBAAgB,CAAC;AAE3D,OAAO,8BAA8B,CAAC;AAatC,QAAA,MAAM,OAAO,wGA0EX,CAAC;AAEH,eAAe,OAAO,CAAC"}
+{"version":3,"file":"MapView.web.d.ts","sourceRoot":"","sources":["../../src/MapView/MapView.web.tsx"],"names":[],"mappings":";AAIA,OAAO,EAAC,aAAa,EAAE,YAAY,EAAC,MAAM,gBAAgB,CAAC;AAE3D,OAAO,8BAA8B,CAAC;AAatC,QAAA,MAAM,OAAO,wGA2EX,CAAC;AAEH,eAAe,OAAO,CAAC"}
