@@ -23,6 +23,20 @@ export type MapViewProps = {
     markerComponent?: ComponentType;
     // List of coordinates which together forms a direction.
     directionCoordinates?: Array<[number, number]>;
+    // Style used for the line that displays direction
+    directionStyle?: DirectionStyle;
+};
+
+export type DirectionProps = {
+    // Coordinates of points that constitute the direction
+    coordinates: Array<[number, number]>;
+    // Style used for the line that displays direction
+    directionStyle?: DirectionStyle;
+};
+
+type DirectionStyle = {
+    width?: number;
+    color?: string;
 };
 
 export type MapViewHandle = {

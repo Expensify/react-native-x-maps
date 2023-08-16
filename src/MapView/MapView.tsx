@@ -6,7 +6,7 @@ import Direction from './Direction';
 import Utils from './utils';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
-    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, markerComponent: MarkerComponent, directionCoordinates},
+    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, markerComponent: MarkerComponent, directionCoordinates, directionStyle},
     ref,
 ) {
     const cameraRef = useRef<Mapbox.Camera>(null);
@@ -72,7 +72,12 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                             <MarkerComponent />
                         </MarkerView>
                     ))}
-                {directionCoordinates && <Direction coordinates={directionCoordinates} />}
+                {directionCoordinates && (
+                    <Direction
+                        coordinates={directionCoordinates}
+                        directionStyle={directionStyle}
+                    />
+                )}
             </Mapbox.MapView>
         </View>
     );
