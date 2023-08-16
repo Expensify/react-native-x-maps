@@ -38,6 +38,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
             return;
         }
 
+        console.log(waypoints.map((waypoint) => waypoint.coordinate));
         const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
         const {width, height} = getMapDimension(mapRef) || {
             width: 0,
