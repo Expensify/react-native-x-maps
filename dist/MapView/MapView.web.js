@@ -77,6 +77,7 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       },
       width = _ref2.width,
       height = _ref2.height;
+    console.log(width, height);
     console.log(northEast, southWest);
     var viewport = new _webMercator["default"]({
       height: height,

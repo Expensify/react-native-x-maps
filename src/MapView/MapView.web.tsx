@@ -44,6 +44,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
             height: 0,
         };
 
+        console.log(width, height);
         console.log(northEast, southWest);
 
         const viewport = new WebMercatorViewport({height, width});
