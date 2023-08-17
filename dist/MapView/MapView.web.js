@@ -28,20 +28,22 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-var getMapDimension = function getMapDimension(mapRef) {
-  var _mapRef$current;
-  console.log('mapRef', mapRef.current);
-  if (!((_mapRef$current = mapRef.current) !== null && _mapRef$current !== void 0 && _mapRef$current.getMap())) {
-    console.log('mapref.current is undefined');
-    return undefined;
-  }
-  var _mapRef$current$getCa = mapRef.current.getCanvas(),
-    clientWidth = _mapRef$current$getCa.clientWidth,
-    clientHeight = _mapRef$current$getCa.clientHeight;
-  return {
-    width: clientWidth,
-    height: clientHeight
-  };
+var getAdjustment = function getAdjustment(mapRef, waypoints, mapPadding) {
+  var _mapRef$getCanvas = mapRef.getCanvas(),
+    clientHeight = _mapRef$getCanvas.clientHeight,
+    clientWidth = _mapRef$getCanvas.clientWidth;
+  var viewport = new _webMercator["default"]({
+    height: clientHeight,
+    width: clientWidth
+  });
+  var _Utils$getBounds = _utils["default"].getBounds(waypoints.map(function (waypoint) {
+      return waypoint.coordinate;
+    })),
+    northEast = _Utils$getBounds.northEast,
+    southWest = _Utils$getBounds.southWest;
+  return viewport.fitBounds([southWest, northEast], {
+    padding: mapPadding
+  });
 };
 var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
   var accessToken = _ref.accessToken,
@@ -51,57 +53,39 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
     directionCoordinates = _ref.directionCoordinates,
     _ref$initialState = _ref.initialState,
     initialState = _ref$initialState === void 0 ? _CONST.DEFAULT_INITIAL_STATE : _ref$initialState;
-  var mapRef = (0, _react.useRef)(null);
-  var _useState = (0, _react.useState)(),
+  // const mapRef = useRef<MapRef>(null);
+  var _useState = (0, _react.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
-    bounds = _useState2[0],
-    setBounds = _useState2[1];
+    mapRef = _useState2[0],
+    setMapRef = _useState2[1];
+  var _useState3 = (0, _react.useState)(),
+    _useState4 = _slicedToArray(_useState3, 2),
+    bounds = _useState4[0],
+    setBounds = _useState4[1];
+  var setRef = (0, _react.useCallback)(function (newRef) {
+    return setMapRef(newRef);
+  }, []);
   (0, _react.useEffect)(function () {
     if (!waypoints || waypoints.length === 0) {
       return;
     }
+    if (!mapRef) {
+      return;
+    }
     if (waypoints.length === 1) {
-      var _mapRef$current2;
-      (_mapRef$current2 = mapRef.current) === null || _mapRef$current2 === void 0 ? void 0 : _mapRef$current2.flyTo({
+      mapRef.flyTo({
         center: waypoints[0].coordinate,
         zoom: 15
       });
       return;
     }
-    var _Utils$getBounds = _utils["default"].getBounds(waypoints.map(function (waypoint) {
-        return waypoint.coordinate;
-      })),
-      northEast = _Utils$getBounds.northEast,
-      southWest = _Utils$getBounds.southWest;
-    var _ref2 = getMapDimension(mapRef) || {
-        width: 0,
-        height: 0
-      },
-      width = _ref2.width,
-      height = _ref2.height;
-    console.log(width, height);
-    console.log(northEast, southWest);
-    var viewport = new _webMercator["default"]({
-      height: height,
-      width: width
-    });
-    var _viewport$fitBounds = viewport.fitBounds([southWest, northEast], {
-        padding: mapPadding
-      }),
-      latitude = _viewport$fitBounds.latitude,
-      longitude = _viewport$fitBounds.longitude,
-      zoom = _viewport$fitBounds.zoom;
-    setBounds({
-      latitude: latitude,
-      longitude: longitude,
-      zoom: zoom
-    });
-  }, [waypoints]);
+    var newBounds = getAdjustment(mapRef, waypoints, mapPadding);
+    setBounds(newBounds);
+  }, [waypoints, mapRef]);
   (0, _react.useImperativeHandle)(ref, function () {
     return {
       flyTo: function flyTo(location, animationDuration) {
-        var _mapRef$current3;
-        return (_mapRef$current3 = mapRef.current) === null || _mapRef$current3 === void 0 ? void 0 : _mapRef$current3.flyTo({
+        return mapRef === null || mapRef === void 0 ? void 0 : mapRef.flyTo({
           center: location,
           duration: animationDuration
         });
@@ -111,7 +95,7 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNative.View, {
     style: style,
     children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactMapGl["default"], _objectSpread(_objectSpread({
-      ref: mapRef,
+      ref: setRef,
       mapboxAccessToken: accessToken,
       initialViewState: {
         longitude: initialState === null || initialState === void 0 ? void 0 : initialState.location[0],
@@ -120,9 +104,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       },
       mapStyle: "mapbox://styles/mapbox/streets-v9"
     }, bounds), {}, {
-      children: [waypoints && waypoints.map(function (_ref3) {
-        var coordinate = _ref3.coordinate,
-          MarkerComponent = _ref3.markerComponent;
+      children: [waypoints && waypoints.map(function (_ref2) {
+        var coordinate = _ref2.coordinate,
+          MarkerComponent = _ref2.markerComponent;
         return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactMapGl.Marker, {
           longitude: coordinate[0],
           latitude: coordinate[1],

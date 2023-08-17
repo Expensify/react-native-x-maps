@@ -37,13 +37,13 @@ type InitialState = {
 };
 
 // Waypoint to be displayed on the map
-type WayPoint = {
+export type WayPoint = {
     coordinate: [number, number];
     markerComponent: ComponentType;
 };
 
 // Style used for the line that displays direction
-type DirectionStyle = {
+export type DirectionStyle = {
     width?: number;
     color?: string;
 };
