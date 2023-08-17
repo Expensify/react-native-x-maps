@@ -38,19 +38,18 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
             return;
         }
 
-        console.log(waypoints.map((waypoint) => waypoint.coordinate));
-        // const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
-        // const {width, height} = getMapDimension(mapRef) || {
-        //     width: 0,
-        //     height: 0,
-        // };
-        // const viewport = new WebMercatorViewport({height, width});
+        const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
+        const {width, height} = getMapDimension(mapRef) || {
+            width: 0,
+            height: 0,
+        };
+        const viewport = new WebMercatorViewport({height, width});
 
-        // const {latitude, longitude, zoom} = viewport.fitBounds([southWest, northEast], {
-        //     padding: mapPadding,
-        // });
+        const {latitude, longitude, zoom} = viewport.fitBounds([southWest, northEast], {
+            padding: mapPadding,
+        });
 
-        // setBounds({latitude, longitude, zoom});
+        setBounds({latitude, longitude, zoom});
     }, [waypoints]);
 
     useImperativeHandle(
