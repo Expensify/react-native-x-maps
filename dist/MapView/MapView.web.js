@@ -30,6 +30,7 @@ function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefine
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var getMapDimension = function getMapDimension(mapRef) {
   var _mapRef$current;
+  console.log('mapRef', mapRef.current);
   if (!((_mapRef$current = mapRef.current) !== null && _mapRef$current !== void 0 && _mapRef$current.getMap())) {
     console.log('mapref.current is undefined');
     return undefined;
