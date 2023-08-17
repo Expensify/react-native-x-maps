@@ -17,10 +17,7 @@ const getMapDimension = (mapRef: RefObject<MapRef>): {width: number; height: num
     return {width: clientWidth, height: clientHeight};
 };
 
-const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
-    {accessToken, waypoints, style, mapPadding, markerComponent: MarkerComponent, directionCoordinates, initialState = DEFAULT_INITIAL_STATE},
-    ref,
-) {
+const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE}, ref) {
     const mapRef = useRef<MapRef>(null);
     const [bounds, setBounds] = useState<{
         longitude: number;
@@ -35,13 +32,13 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
 
         if (waypoints.length === 1) {
             mapRef.current?.flyTo({
-                center: waypoints[0],
+                center: waypoints[0].coordinate,
                 zoom: 15,
             });
             return;
         }
 
-        const {northEast, southWest} = Utils.getBounds(waypoints);
+        const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
         const {width, height} = getMapDimension(mapRef) || {
             width: 0,
             height: 0,
@@ -80,13 +77,12 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                 mapStyle="mapbox://styles/mapbox/streets-v9"
                 {...bounds}
             >
-                {MarkerComponent &&
-                    waypoints &&
-                    waypoints.map((waypoint) => (
+                {waypoints &&
+                    waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (
                         <Marker
-                            key={`${waypoint[0]},${waypoint[1]}`}
-                            longitude={waypoint[0]}
-                            latitude={waypoint[1]}
+                            key={`${coordinate[0]},${coordinate[1]}`}
+                            longitude={coordinate[0]}
+                            latitude={coordinate[1]}
                         >
                             <MarkerComponent />
                         </Marker>

@@ -1,7 +1,8 @@
 import {Layer, Source} from 'react-map-gl';
 import {View} from 'react-native';
+import {DirectionProps} from './MapViewTypes';
 
-function Direction({coordinates}: {coordinates: Array<[number, number]>}) {
+function Direction({coordinates, directionStyle}: DirectionProps) {
     if (coordinates.length < 1) {
         return null;
     }
@@ -25,7 +26,7 @@ function Direction({coordinates}: {coordinates: Array<[number, number]>}) {
                         type="line"
                         source="route"
                         layout={{'line-join': 'round', 'line-cap': 'round'}}
-                        paint={{'line-color': '#888', 'line-width': 4}}
+                        paint={{'line-color': directionStyle?.color ?? '#000000', 'line-width': directionStyle?.width ?? 1}}
                     />
                 </Source>
             )}

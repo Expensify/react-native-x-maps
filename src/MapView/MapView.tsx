@@ -6,7 +6,7 @@ import Direction from './Direction';
 import Utils from './utils';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
-    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, markerComponent: MarkerComponent, directionCoordinates},
+    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, directionCoordinates, directionStyle},
     ref,
 ) {
     const cameraRef = useRef<Mapbox.Camera>(null);
@@ -17,12 +17,12 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
         }
 
         if (waypoints.length === 1) {
-            cameraRef.current?.flyTo(waypoints[0]);
+            cameraRef.current?.flyTo(waypoints[0].coordinate);
             cameraRef.current?.zoomTo(15);
             return undefined;
         }
 
-        const {southWest, northEast} = Utils.getBounds(waypoints);
+        const {southWest, northEast} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
         return {
             ne: northEast,
             sw: southWest,
@@ -61,18 +61,22 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                     }}
                     bounds={bounds}
                 />
-                {MarkerComponent &&
-                    waypoints &&
-                    waypoints.map((waypoint) => (
+                {waypoints &&
+                    waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (
                         <MarkerView
-                            id={`${waypoint[0]},${waypoint[1]}`}
-                            key={`${waypoint[0]},${waypoint[1]}`}
-                            coordinate={waypoint}
+                            id={`${coordinate[0]},${coordinate[1]}`}
+                            key={`${coordinate[0]},${coordinate[1]}`}
+                            coordinate={coordinate}
                         >
                             <MarkerComponent />
                         </MarkerView>
                     ))}
-                {directionCoordinates && <Direction coordinates={directionCoordinates} />}
+                {directionCoordinates && (
+                    <Direction
+                        coordinates={directionCoordinates}
+                        directionStyle={directionStyle}
+                    />
+                )}
             </Mapbox.MapView>
         </View>
     );
