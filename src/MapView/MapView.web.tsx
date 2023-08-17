@@ -10,6 +10,7 @@ import {DEFAULT_INITIAL_STATE} from './CONST';
 
 const getMapDimension = (mapRef: RefObject<MapRef>): {width: number; height: number} | undefined => {
     if (!mapRef.current?.getMap()) {
+        console.log('mapref.current is undefined');
         return undefined;
     }
 

@@ -31,6 +31,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var getMapDimension = function getMapDimension(mapRef) {
   var _mapRef$current;
   if (!((_mapRef$current = mapRef.current) !== null && _mapRef$current !== void 0 && _mapRef$current.getMap())) {
+    console.log('mapref.current is undefined');
     return undefined;
   }
   var _mapRef$current$getCa = mapRef.current.getCanvas(),
