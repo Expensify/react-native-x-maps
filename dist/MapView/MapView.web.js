@@ -7,7 +7,9 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _reactMapGl = _interopRequireWildcard(require("react-map-gl"));
 var _react = require("react");
+var _webMercator = _interopRequireDefault(require("@math.gl/web-mercator"));
 var _reactNative = require("react-native");
+var _utils = _interopRequireDefault(require("./utils"));
 require("mapbox-gl/dist/mapbox-gl.css");
 var _Direction = _interopRequireDefault(require("./Direction"));
 var _CONST = require("./CONST");
@@ -64,21 +66,32 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       });
       return;
     }
-    console.log(waypoints.map(function (waypoint) {
-      return waypoint.coordinate;
-    }));
-    // const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
-    // const {width, height} = getMapDimension(mapRef) || {
-    //     width: 0,
-    //     height: 0,
-    // };
-    // const viewport = new WebMercatorViewport({height, width});
-
-    // const {latitude, longitude, zoom} = viewport.fitBounds([southWest, northEast], {
-    //     padding: mapPadding,
-    // });
-
-    // setBounds({latitude, longitude, zoom});
+    var _Utils$getBounds = _utils["default"].getBounds(waypoints.map(function (waypoint) {
+        return waypoint.coordinate;
+      })),
+      northEast = _Utils$getBounds.northEast,
+      southWest = _Utils$getBounds.southWest;
+    var _ref2 = getMapDimension(mapRef) || {
+        width: 0,
+        height: 0
+      },
+      width = _ref2.width,
+      height = _ref2.height;
+    var viewport = new _webMercator["default"]({
+      height: height,
+      width: width
+    });
+    var _viewport$fitBounds = viewport.fitBounds([southWest, northEast], {
+        padding: mapPadding
+      }),
+      latitude = _viewport$fitBounds.latitude,
+      longitude = _viewport$fitBounds.longitude,
+      zoom = _viewport$fitBounds.zoom;
+    setBounds({
+      latitude: latitude,
+      longitude: longitude,
+      zoom: zoom
+    });
   }, [waypoints]);
   (0, _react.useImperativeHandle)(ref, function () {
     return {
@@ -103,9 +116,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       },
       mapStyle: "mapbox://styles/mapbox/streets-v9"
     }, bounds), {}, {
-      children: [waypoints && waypoints.map(function (_ref2) {
-        var coordinate = _ref2.coordinate,
-          MarkerComponent = _ref2.markerComponent;
+      children: [waypoints && waypoints.map(function (_ref3) {
+        var coordinate = _ref3.coordinate,
+          MarkerComponent = _ref3.markerComponent;
         return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactMapGl.Marker, {
           longitude: coordinate[0],
           latitude: coordinate[1],
