@@ -28,13 +28,10 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-var getAdjustment = function getAdjustment(mapRef, waypoints, mapPadding) {
-  var _mapRef$getCanvas = mapRef.getCanvas(),
-    clientHeight = _mapRef$getCanvas.clientHeight,
-    clientWidth = _mapRef$getCanvas.clientWidth;
+var getAdjustment = function getAdjustment(mapWidth, mapHeight, waypoints, mapPadding) {
   var viewport = new _webMercator["default"]({
-    height: clientHeight,
-    width: clientWidth
+    height: mapWidth,
+    width: mapHeight
   });
   var _Utils$getBounds = _utils["default"].getBounds(waypoints.map(function (waypoint) {
       return waypoint.coordinate;
@@ -46,6 +43,7 @@ var getAdjustment = function getAdjustment(mapRef, waypoints, mapPadding) {
   });
 };
 var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
+  var _mapRef$getCanvas;
   var accessToken = _ref.accessToken,
     waypoints = _ref.waypoints,
     style = _ref.style,
@@ -65,11 +63,17 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
   var setRef = (0, _react.useCallback)(function (newRef) {
     return setMapRef(newRef);
   }, []);
+  var _ref2 = (_mapRef$getCanvas = mapRef === null || mapRef === void 0 ? void 0 : mapRef.getCanvas()) !== null && _mapRef$getCanvas !== void 0 ? _mapRef$getCanvas : {
+      clientHeight: undefined,
+      clientWidth: undefined
+    },
+    mapHeight = _ref2.clientHeight,
+    mapWidth = _ref2.clientWidth;
   (0, _react.useEffect)(function () {
     if (!waypoints || waypoints.length === 0) {
       return;
     }
-    if (!mapRef) {
+    if (!mapRef || !mapWidth || !mapHeight) {
       return;
     }
     if (waypoints.length === 1) {
@@ -79,9 +83,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       });
       return;
     }
-    var newBounds = getAdjustment(mapRef, waypoints, mapPadding);
+    var newBounds = getAdjustment(mapWidth, mapHeight, waypoints, mapPadding);
     setBounds(newBounds);
-  }, [waypoints, mapRef]);
+  }, [waypoints, mapHeight, mapWidth]);
   (0, _react.useImperativeHandle)(ref, function () {
     return {
       flyTo: function flyTo(location, animationDuration) {
@@ -104,9 +108,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       },
       mapStyle: "mapbox://styles/mapbox/streets-v9"
     }, bounds), {}, {
-      children: [waypoints && waypoints.map(function (_ref2) {
-        var coordinate = _ref2.coordinate,
-          MarkerComponent = _ref2.markerComponent;
+      children: [waypoints && waypoints.map(function (_ref3) {
+        var coordinate = _ref3.coordinate,
+          MarkerComponent = _ref3.markerComponent;
         return /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactMapGl.Marker, {
           longitude: coordinate[0],
           latitude: coordinate[1],

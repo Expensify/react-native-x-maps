@@ -8,9 +8,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Direction from './Direction';
 import {DEFAULT_INITIAL_STATE} from './CONST';
 
-const getAdjustment = (mapRef: MapRef, waypoints: WayPoint[], mapPadding?: number) => {
-    const {clientHeight, clientWidth} = mapRef.getCanvas();
-    const viewport = new WebMercatorViewport({height: clientHeight, width: clientWidth});
+const getAdjustment = (mapWidth: number, mapHeight: number, waypoints: WayPoint[], mapPadding?: number) => {
+    const viewport = new WebMercatorViewport({height: mapWidth, width: mapHeight});
 
     const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
     return viewport.fitBounds([southWest, northEast], {
@@ -29,12 +28,14 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
 
     const setRef = useCallback((newRef: MapRef | null) => setMapRef(newRef), []);
 
+    const {clientHeight: mapHeight, clientWidth: mapWidth} = mapRef?.getCanvas() ?? {clientHeight: undefined, clientWidth: undefined};
+
     useEffect(() => {
         if (!waypoints || waypoints.length === 0) {
             return;
         }
 
-        if (!mapRef) {
+        if (!mapRef || !mapWidth || !mapHeight) {
             return;
         }
 
@@ -46,9 +47,9 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
             return;
         }
 
-        const newBounds = getAdjustment(mapRef, waypoints, mapPadding);
+        const newBounds = getAdjustment(mapWidth, mapHeight, waypoints, mapPadding);
         setBounds(newBounds);
-    }, [waypoints, mapRef]);
+    }, [waypoints, mapHeight, mapWidth]);
 
     useImperativeHandle(
         ref,
