@@ -89,7 +89,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
   (0, _react.useImperativeHandle)(ref, function () {
     return {
       flyTo: function flyTo(location, animationDuration) {
-        return mapRef === null || mapRef === void 0 ? void 0 : mapRef.flyTo({
+        console.log('location inside MapView', location);
+        console.log('mapRef inside MapView', mapRef);
+        mapRef === null || mapRef === void 0 ? void 0 : mapRef.flyTo({
           center: location,
           duration: animationDuration
         });

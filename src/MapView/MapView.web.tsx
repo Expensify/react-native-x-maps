@@ -54,11 +54,14 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
     useImperativeHandle(
         ref,
         () => ({
-            flyTo: (location: [number, number], animationDuration?: number) =>
+            flyTo: (location: [number, number], animationDuration?: number) => {
+                console.log('location inside MapView', location);
+                console.log('mapRef inside MapView', mapRef);
                 mapRef?.flyTo({
                     center: location,
                     duration: animationDuration,
-                }),
+                });
+            },
         }),
         [],
     );
