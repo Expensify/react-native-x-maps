@@ -77,10 +77,11 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       return;
     }
     if (waypoints.length === 1) {
-      // mapRef.flyTo({
-      //     center: waypoints[0].coordinate,
-      //     zoom: 15,
-      // });
+      console.log('map size', mapHeight, mapWidth);
+      mapRef.flyTo({
+        center: waypoints[0].coordinate,
+        zoom: 15
+      });
       return;
     }
     var newBounds = getAdjustment(mapWidth, mapHeight, waypoints, mapPadding);
@@ -89,9 +90,6 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
   (0, _react.useImperativeHandle)(ref, function () {
     return {
       flyTo: function flyTo(location, animationDuration) {
-        console.log('location inside MapView', location);
-        console.log('mapRef inside MapView', mapRef);
-        console.log('flyTo Method', mapRef === null || mapRef === void 0 ? void 0 : mapRef.flyTo);
         mapRef === null || mapRef === void 0 ? void 0 : mapRef.flyTo({
           center: location,
           duration: animationDuration

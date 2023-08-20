@@ -40,10 +40,11 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
         }
 
         if (waypoints.length === 1) {
-            // mapRef.flyTo({
-            //     center: waypoints[0].coordinate,
-            //     zoom: 15,
-            // });
+            console.log('map size', mapHeight, mapWidth);
+            mapRef.flyTo({
+                center: waypoints[0].coordinate,
+                zoom: 15,
+            });
             return;
         }
 
@@ -55,9 +56,6 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
         ref,
         () => ({
             flyTo: (location: [number, number], animationDuration?: number) => {
-                console.log('location inside MapView', location);
-                console.log('mapRef inside MapView', mapRef);
-                console.log('flyTo Method', mapRef?.flyTo);
                 mapRef?.flyTo({
                     center: location,
                     duration: animationDuration,
