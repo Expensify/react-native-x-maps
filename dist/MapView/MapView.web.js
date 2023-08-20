@@ -77,10 +77,10 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       return;
     }
     if (waypoints.length === 1) {
-      mapRef.flyTo({
-        center: waypoints[0].coordinate,
-        zoom: 15
-      });
+      // mapRef.flyTo({
+      //     center: waypoints[0].coordinate,
+      //     zoom: 15,
+      // });
       return;
     }
     var newBounds = getAdjustment(mapWidth, mapHeight, waypoints, mapPadding);

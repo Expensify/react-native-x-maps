@@ -40,10 +40,10 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
         }
 
         if (waypoints.length === 1) {
-            mapRef.flyTo({
-                center: waypoints[0].coordinate,
-                zoom: 15,
-            });
+            // mapRef.flyTo({
+            //     center: waypoints[0].coordinate,
+            //     zoom: 15,
+            // });
             return;
         }
 
