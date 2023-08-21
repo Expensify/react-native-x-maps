@@ -1,1 +1,1 @@
-{"version":3,"file":"MapView.d.ts","sourceRoot":"","sources":["../../src/MapView/MapView.tsx"],"names":[],"mappings":";AAGA,OAAO,EAAC,YAAY,EAAE,aAAa,EAAC,MAAM,gBAAgB,CAAC;AAI3D,QAAA,MAAM,OAAO,wGA2EX,CAAC;AAEH,eAAe,OAAO,CAAC"}
+{"version":3,"file":"MapView.d.ts","sourceRoot":"","sources":["../../src/MapView/MapView.tsx"],"names":[],"mappings":";AAGA,OAAO,EAAC,YAAY,EAAE,aAAa,EAAC,MAAM,gBAAgB,CAAC;AAI3D,QAAA,MAAM,OAAO,wGA8EX,CAAC;AAEH,eAAe,OAAO,CAAC"}

@@ -80,6 +80,7 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
       }), waypoints && waypoints.map(function (_ref2) {
         var coordinate = _ref2.coordinate,
           MarkerComponent = _ref2.markerComponent;
+        console.log(MarkerComponent);
         return /*#__PURE__*/(0, _jsxRuntime.jsx)(_maps.MarkerView, {
           id: "".concat(coordinate[0], ",").concat(coordinate[1]),
           coordinate: coordinate,
