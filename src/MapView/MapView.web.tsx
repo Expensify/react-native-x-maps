@@ -16,7 +16,7 @@ const getAdjustment = (mapWidth: number, mapHeight: number, waypoints: WayPoint[
     });
 };
 
-const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, longitude, latitude, zoom}, ref) {
+const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, longitude, latitude, zoom, onMove}, ref) {
     // const mapRef = useRef<MapRef>(null);
     const [mapRef, setMapRef] = useState<MapRef | null>(null);
     const [bounds, setBounds] = useState<{
@@ -39,7 +39,6 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
         }
 
         if (waypoints.length === 1) {
-            console.log('map size', mapHeight, mapWidth);
             mapRef.flyTo({
                 center: waypoints[0].coordinate,
                 zoom: 15,
@@ -73,7 +72,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
                 latitude={latitude}
                 zoom={zoom}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
-                {...bounds}
+                onMove={(event) => onMove(event.viewState)}
             >
                 {waypoints &&
                     waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (

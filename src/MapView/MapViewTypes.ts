@@ -26,6 +26,8 @@ export type MapViewProps = {
     latitude: number;
 
     zoom: number;
+
+    onMove: (viewState: ViewState) => void;
 };
 
 export type DirectionProps = {
@@ -33,6 +35,12 @@ export type DirectionProps = {
     coordinates: Array<[number, number]>;
     // Style used for the line that displays direction
     directionStyle?: DirectionStyle;
+};
+
+export type ViewState = {
+    longitude: number;
+    latitude: number;
+    zoom: number;
 };
 
 // Initial state of the map

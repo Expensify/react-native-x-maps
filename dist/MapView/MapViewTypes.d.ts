@@ -13,10 +13,16 @@ export type MapViewProps = {
     longitude: number;
     latitude: number;
     zoom: number;
+    onMove: (viewState: ViewState) => void;
 };
 export type DirectionProps = {
     coordinates: Array<[number, number]>;
     directionStyle?: DirectionStyle;
+};
+export type ViewState = {
+    longitude: number;
+    latitude: number;
+    zoom: number;
 };
 type InitialState = {
     location: [number, number];
