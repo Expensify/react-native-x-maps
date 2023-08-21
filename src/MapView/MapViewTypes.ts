@@ -20,6 +20,12 @@ export type MapViewProps = {
     directionCoordinates?: Array<[number, number]>;
     // Style used for the line that displays direction
     directionStyle?: DirectionStyle;
+
+    longitude: number;
+
+    latitude: number;
+
+    zoom: number;
 };
 
 export type DirectionProps = {

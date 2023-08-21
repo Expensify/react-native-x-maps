@@ -10,6 +10,9 @@ export type MapViewProps = {
     waypoints?: WayPoint[];
     directionCoordinates?: Array<[number, number]>;
     directionStyle?: DirectionStyle;
+    longitude: number;
+    latitude: number;
+    zoom: number;
 };
 export type DirectionProps = {
     coordinates: Array<[number, number]>;

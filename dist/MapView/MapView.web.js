@@ -12,7 +12,6 @@ var _reactNative = require("react-native");
 var _utils = _interopRequireDefault(require("./utils"));
 require("mapbox-gl/dist/mapbox-gl.css");
 var _Direction = _interopRequireDefault(require("./Direction"));
-var _CONST = require("./CONST");
 var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -49,8 +48,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
     style = _ref.style,
     mapPadding = _ref.mapPadding,
     directionCoordinates = _ref.directionCoordinates,
-    _ref$initialState = _ref.initialState,
-    initialState = _ref$initialState === void 0 ? _CONST.DEFAULT_INITIAL_STATE : _ref$initialState;
+    longitude = _ref.longitude,
+    latitude = _ref.latitude,
+    zoom = _ref.zoom;
   // const mapRef = useRef<MapRef>(null);
   var _useState = (0, _react.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
@@ -102,11 +102,9 @@ var MapView = /*#__PURE__*/(0, _react.forwardRef)(function MapView(_ref, ref) {
     children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_reactMapGl["default"], _objectSpread(_objectSpread({
       ref: setRef,
       mapboxAccessToken: accessToken,
-      initialViewState: {
-        longitude: initialState === null || initialState === void 0 ? void 0 : initialState.location[0],
-        latitude: initialState === null || initialState === void 0 ? void 0 : initialState.location[1],
-        zoom: initialState === null || initialState === void 0 ? void 0 : initialState.zoom
-      },
+      longitude: longitude,
+      latitude: latitude,
+      zoom: zoom,
       mapStyle: "mapbox://styles/mapbox/streets-v9"
     }, bounds), {}, {
       children: [waypoints && waypoints.map(function (_ref3) {

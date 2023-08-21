@@ -6,7 +6,6 @@ import {MapViewHandle, MapViewProps, WayPoint} from './MapViewTypes';
 import Utils from './utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Direction from './Direction';
-import {DEFAULT_INITIAL_STATE} from './CONST';
 
 const getAdjustment = (mapWidth: number, mapHeight: number, waypoints: WayPoint[], mapPadding?: number) => {
     const viewport = new WebMercatorViewport({height: mapWidth, width: mapHeight});
@@ -17,7 +16,7 @@ const getAdjustment = (mapWidth: number, mapHeight: number, waypoints: WayPoint[
     });
 };
 
-const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE}, ref) {
+const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, longitude, latitude, zoom}, ref) {
     // const mapRef = useRef<MapRef>(null);
     const [mapRef, setMapRef] = useState<MapRef | null>(null);
     const [bounds, setBounds] = useState<{
@@ -70,11 +69,9 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
             <Map
                 ref={setRef}
                 mapboxAccessToken={accessToken}
-                initialViewState={{
-                    longitude: initialState?.location[0],
-                    latitude: initialState?.location[1],
-                    zoom: initialState?.zoom,
-                }}
+                longitude={longitude}
+                latitude={latitude}
+                zoom={zoom}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
                 {...bounds}
             >
