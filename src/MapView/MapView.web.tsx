@@ -7,7 +7,10 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Direction from './Direction';
 import {DEFAULT_INITIAL_STATE} from './CONST';
 
-const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE}, ref) {
+const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
+    {accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE, styleURL},
+    ref,
+) {
     const [mapRef, setMapRef] = useState<MapRef | null>(null);
 
     const setRef = useCallback((newRef: MapRef | null) => setMapRef(newRef), []);
@@ -57,7 +60,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
                     latitude: initialState?.location[1],
                     zoom: initialState?.zoom,
                 }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
+                mapStyle={styleURL}
             >
                 {waypoints &&
                     waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (
