@@ -1,31 +1,14 @@
 import Map, {MapRef, Marker} from 'react-map-gl';
 import {forwardRef, useCallback, useEffect, useImperativeHandle, useState} from 'react';
-import WebMercatorViewport from '@math.gl/web-mercator';
 import {View} from 'react-native';
-import {MapViewHandle, MapViewProps, WayPoint} from './MapViewTypes';
+import {MapViewHandle, MapViewProps} from './MapViewTypes';
 import Utils from './utils';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Direction from './Direction';
 import {DEFAULT_INITIAL_STATE} from './CONST';
 
-const getAdjustment = (mapRef: MapRef, waypoints: WayPoint[], mapPadding?: number) => {
-    const {clientHeight, clientWidth} = mapRef.getCanvas();
-    console.log('clientHeight', clientHeight, 'clientWidth', clientWidth);
-    const viewport = new WebMercatorViewport({height: clientHeight, width: clientWidth});
-
-    const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
-    return viewport.fitBounds([southWest, northEast], {
-        padding: mapPadding,
-    });
-};
-
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE}, ref) {
     const [mapRef, setMapRef] = useState<MapRef | null>(null);
-    const [bounds, setBounds] = useState<{
-        longitude: number;
-        latitude: number;
-        zoom: number;
-    }>();
 
     const setRef = useCallback((newRef: MapRef | null) => setMapRef(newRef), []);
 
@@ -46,8 +29,10 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
             return;
         }
 
-        const newBounds = getAdjustment(mapRef, waypoints, mapPadding);
-        setBounds(newBounds);
+        const map = mapRef.getMap();
+
+        const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
+        map.fitBounds([northEast, southWest], {padding: mapPadding});
     }, [waypoints, mapRef]);
 
     useImperativeHandle(
@@ -73,7 +58,6 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({access
                     zoom: initialState?.zoom,
                 }}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
-                {...bounds}
             >
                 {waypoints &&
                     waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (
