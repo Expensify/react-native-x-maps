@@ -19,11 +19,11 @@ type InitialState = {
     location: [number, number];
     zoom: number;
 };
-type WayPoint = {
+export type WayPoint = {
     coordinate: [number, number];
     markerComponent: ComponentType;
 };
-type DirectionStyle = {
+export type DirectionStyle = {
     width?: number;
     color?: string;
 };

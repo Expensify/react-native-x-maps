@@ -10,6 +10,7 @@ import {DEFAULT_INITIAL_STATE} from './CONST';
 
 const getAdjustment = (mapRef: MapRef, waypoints: WayPoint[], mapPadding?: number) => {
     const {clientHeight, clientWidth} = mapRef.getCanvas();
+    console.log('clientHeight', clientHeight, 'clientWidth', clientWidth);
     const viewport = new WebMercatorViewport({height: clientHeight, width: clientWidth});
 
     const {northEast, southWest} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
