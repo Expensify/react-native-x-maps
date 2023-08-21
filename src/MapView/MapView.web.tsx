@@ -19,7 +19,6 @@ const getAdjustment = (mapRef: MapRef, waypoints: WayPoint[], mapPadding?: numbe
 };
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView({accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE}, ref) {
-    // const mapRef = useRef<MapRef>(null);
     const [mapRef, setMapRef] = useState<MapRef | null>(null);
     const [bounds, setBounds] = useState<{
         longitude: number;
