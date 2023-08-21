@@ -62,18 +62,15 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                     bounds={bounds}
                 />
                 {waypoints &&
-                    waypoints.map(({coordinate, markerComponent: MarkerComponent}) => {
-                        console.log(MarkerComponent);
-                        return (
-                            <MarkerView
-                                id={`${coordinate[0]},${coordinate[1]}`}
-                                key={`${coordinate[0]},${coordinate[1]}`}
-                                coordinate={coordinate}
-                            >
-                                <MarkerComponent />
-                            </MarkerView>
-                        );
-                    })}
+                    waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (
+                        <MarkerView
+                            id={`${coordinate[0]},${coordinate[1]}`}
+                            key={`${coordinate[0]},${coordinate[1]}`}
+                            coordinate={coordinate}
+                        >
+                            <MarkerComponent />
+                        </MarkerView>
+                    ))}
                 {directionCoordinates && (
                     <Direction
                         coordinates={directionCoordinates}
