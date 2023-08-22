@@ -17,6 +17,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
         }
 
         if (waypoints.length === 1) {
+            console.log('cameraRef', cameraRef.current);
             cameraRef.current?.flyTo(waypoints[0].coordinate);
             cameraRef.current?.zoomTo(15);
             return undefined;
