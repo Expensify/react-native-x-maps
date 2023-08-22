@@ -8,7 +8,7 @@ import Direction from './Direction';
 import {DEFAULT_INITIAL_STATE} from './CONST';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
-    {accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE, styleURL},
+    {accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE, styleURL, directionStyle},
     ref,
 ) {
     const [mapRef, setMapRef] = useState<MapRef | null>(null);
@@ -72,7 +72,12 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                             <MarkerComponent />
                         </Marker>
                     ))}
-                {directionCoordinates && <Direction coordinates={directionCoordinates} />}
+                {directionCoordinates && (
+                    <Direction
+                        coordinates={directionCoordinates}
+                        directionStyle={directionStyle}
+                    />
+                )}
             </Map>
         </View>
     );
