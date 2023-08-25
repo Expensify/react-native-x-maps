@@ -39,7 +39,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
         [],
     );
 
-    const onMapIdle = (e: MapState) => {
+    const setMapIdle = (e: MapState) => {
         if (e.gestures.isGestureActive) return;
         setIsIdle(true);
     }
@@ -55,7 +55,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                 styleURL={styleURL}
                 pitchEnabled={pitchEnabled}
                 style={{flex: 1}}
-                onMapIdle={onMapIdle}
+                onMapIdle={setMapIdle}
             >
                 <Mapbox.Camera
                     ref={cameraRef}
