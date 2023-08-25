@@ -1,37 +1,35 @@
-import {forwardRef, useEffect, useImperativeHandle, useMemo, useRef} from 'react';
-import Mapbox, {MarkerView} from '@rnmapbox/maps';
+import {forwardRef, useEffect, useImperativeHandle, useCallback, useRef, useState} from 'react';
+import Mapbox, {MapState, MarkerView} from '@rnmapbox/maps';
 import {View} from 'react-native';
 import {MapViewProps, MapViewHandle} from './MapViewTypes';
 import Direction from './Direction';
 import Utils from './utils';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
-    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, directionCoordinates, directionStyle},
+    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, directionCoordinates, directionStyle, isFocused},
     ref,
 ) {
     const cameraRef = useRef<Mapbox.Camera>(null);
+    const [isIdle, setIsIdle] = useState(false);
 
-    const bounds = useMemo(() => {
-        if (!waypoints || waypoints.length === 0) {
-            return undefined;
-        }
+    useEffect(() => {
+        if (isFocused) return;
+        setIsIdle(false);
+    }, [isFocused]);
+
+    useEffect(() => {
+        if (!waypoints || !waypoints.length || !isIdle || !isFocused) return;
 
         if (waypoints.length === 1) {
-            cameraRef.current?.flyTo(waypoints[0].coordinate);
-            cameraRef.current?.zoomTo(15);
-            return undefined;
+            cameraRef.current?.setCamera({
+                zoomLevel: 15,
+                centerCoordinate: waypoints[0].coordinate,
+            });
+        } else {
+            const {southWest, northEast} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
+            cameraRef.current?.fitBounds(northEast, southWest, mapPadding, 1000);
         }
-
-        const {southWest, northEast} = Utils.getBounds(waypoints.map((waypoint) => waypoint.coordinate));
-        return {
-            ne: northEast,
-            sw: southWest,
-            paddingTop: mapPadding,
-            paddingRight: mapPadding,
-            paddingBottom: mapPadding,
-            paddingLeft: mapPadding,
-        };
-    }, [waypoints]);
+    }, [mapPadding, waypoints, isFocused, isIdle]);
 
     useImperativeHandle(
         ref,
@@ -40,6 +38,11 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
         }),
         [],
     );
+
+    const onMapIdle = (e: MapState) => {
+        if (e.gestures.isGestureActive) return;
+        setIsIdle(true);
+    }
 
     // Initialize Mapbox on first mount
     useEffect(() => {
@@ -52,6 +55,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                 styleURL={styleURL}
                 pitchEnabled={pitchEnabled}
                 style={{flex: 1}}
+                onMapIdle={onMapIdle}
             >
                 <Mapbox.Camera
                     ref={cameraRef}
@@ -59,7 +63,6 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                         centerCoordinate: initialState?.location,
                         zoomLevel: initialState?.zoom,
                     }}
-                    bounds={bounds}
                 />
                 {waypoints &&
                     waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (

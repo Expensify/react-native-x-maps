@@ -6,6 +6,8 @@ export type MapViewProps = {
     accessToken: string;
     // Style applied to MapView component. Note some of the View Style props are not available on ViewMap
     style: StyleProp<ViewStyle>;
+    // Focus state of the screen
+    isFocused: boolean
     // Link to the style JSON document.
     styleURL?: string;
     // Whether map can tilt in the vertical direction.
