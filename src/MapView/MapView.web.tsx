@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Direction from './Direction';
 import {DEFAULT_INITIAL_STATE} from './CONST';
 
-const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
+const MapView = forwardRef<MapViewHandle, Omit<MapViewProps, "isFocused">>(function MapView(
     {accessToken, waypoints, style, mapPadding, directionCoordinates, initialState = DEFAULT_INITIAL_STATE, styleURL, directionStyle},
     ref,
 ) {

@@ -1,4 +1,4 @@
-import {forwardRef, useEffect, useImperativeHandle, useCallback, useRef, useState} from 'react';
+import {forwardRef, useEffect, useImperativeHandle, useRef, useState} from 'react';
 import Mapbox, {MapState, MarkerView} from '@rnmapbox/maps';
 import {View} from 'react-native';
 import {MapViewProps, MapViewHandle} from './MapViewTypes';
