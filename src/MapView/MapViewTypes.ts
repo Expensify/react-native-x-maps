@@ -22,6 +22,8 @@ export type MapViewProps = {
     directionCoordinates?: Array<[number, number]>;
     // Style used for the line that displays direction
     directionStyle?: DirectionStyle;
+    // Whether to display Mapbox logo on the map (iOS and Android only)
+    logoEnabled?: boolean;
 };
 
 export type DirectionProps = {

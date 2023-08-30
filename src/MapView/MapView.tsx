@@ -6,7 +6,7 @@ import Direction from './Direction';
 import Utils from './utils';
 
 const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
-    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, directionCoordinates, directionStyle, isFocused},
+    {accessToken, style, styleURL, pitchEnabled, mapPadding, initialState, waypoints, directionCoordinates, directionStyle, isFocused, logoEnabled},
     ref,
 ) {
     const cameraRef = useRef<Mapbox.Camera>(null);
@@ -56,6 +56,7 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                 pitchEnabled={pitchEnabled}
                 style={{flex: 1}}
                 onMapIdle={setMapIdle}
+                logoEnabled={logoEnabled}
             >
                 <Mapbox.Camera
                     ref={cameraRef}
