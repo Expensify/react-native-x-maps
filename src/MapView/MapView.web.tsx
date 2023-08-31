@@ -63,9 +63,9 @@ const MapView = forwardRef<MapViewHandle, MapViewProps>(function MapView(
                 mapStyle={styleURL}
             >
                 {waypoints &&
-                    waypoints.map(({coordinate, markerComponent: MarkerComponent}) => (
+                    waypoints.map(({coordinate, markerComponent: MarkerComponent}, index) => (
                         <Marker
-                            key={`${coordinate[0]},${coordinate[1]}`}
+                            key={`${index},${coordinate[0]},${coordinate[1]}`}
                             longitude={coordinate[0]}
                             latitude={coordinate[1]}
                         >
