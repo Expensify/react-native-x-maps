@@ -1,6 +1,6 @@
 {
     "name": "react-native-x-maps",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "description": "A cross platform compatible map component for React-Native",
     "main": "./dist/index.js",
     "files": [
