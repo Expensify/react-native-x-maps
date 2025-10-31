@@ -5,9 +5,9 @@ on:
         branches: [main]
 
 permissions:
-  # Required for OIDC: https://docs.npmjs.com/trusted-publishers
-  id-token: write
-  contents: read
+    # Required for OIDC: https://docs.npmjs.com/trusted-publishers
+    id-token: write
+    contents: read
 
 # Ensure that only one instance of this workflow executes at a time.
 # If multiple PRs are merged in quick succession, there will only ever be one publish workflow running and one pending.
