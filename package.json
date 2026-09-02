@@ -30,6 +30,18 @@
         "url": "https://github.com/Expensify/react-native-x-maps/issues"
     },
     "homepage": "https://github.com/Expensify/react-native-x-maps#readme",
+    "devEngines": {
+        "runtime": {
+            "name": "node",
+            "version": ">=24.19.0",
+            "onFail": "error"
+        },
+        "packageManager": {
+            "name": "npm",
+            "version": ">=11.10.0",
+            "onFail": "error"
+        }
+    },
     "peerDependencies": {
         "@rnmapbox/maps": "^10.0.11",
         "mapbox-gl": "^2.15.0",
