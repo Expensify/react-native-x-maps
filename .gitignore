@@ -6,7 +6,5 @@ node_modules/
 npm-debug.log
 dist/
 
-# NPM file created by GitHub actions
-
 # IDEs
 .idea
