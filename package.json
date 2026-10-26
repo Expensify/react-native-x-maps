@@ -68,5 +68,19 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "prettier": "^3.0.0",
         "typescript": "^5.1.6"
+    },
+    "overrides": {
+        "@react-native-community/cli-doctor": {
+            ".": "11.4.1",
+            "@react-native-community/cli-config": "11.3.5",
+            "@react-native-community/cli-platform-android": "11.3.5",
+            "@react-native-community/cli-platform-ios": "11.3.5",
+            "@react-native-community/cli-tools": "11.3.5"
+        },
+        "@react-native-community/cli-hermes": {
+            ".": "11.4.1",
+            "@react-native-community/cli-platform-android": "11.3.5",
+            "@react-native-community/cli-tools": "11.3.5"
+        }
     }
 }
