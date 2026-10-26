@@ -68,5 +68,8 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "prettier": "^3.0.0",
         "typescript": "^5.1.6"
+    },
+    "overrides": {
+        "fast-xml-parser": "5.11.2"
     }
 }
